@@ -1,0 +1,20 @@
+<main class="main">
+
+  <div class="main" *ngIf="isDesktop && !done">
+    <h1>Scan to Start Identity Verification</h1>
+    <qr class="qr"></qr>
+  </div>
+
+
+  <!--Within these DIV container there are 4 elements.  Each element is a Step, so we have 4 steps.  -->
+  <!--Keep in mind the onStepEvent function references 0 as first step and 3 as last step, because data struture is an array  -->
+  
+  <div [ngSwitch]="step" *ngIf="session && !isDesktop">
+    <front-id *ngSwitchCase="0" (nextStepEvent)="onStepEvent($event)" [session]=session></front-id>
+    <back-id *ngSwitchCase="1" (nextStepEvent)="onStepEvent($event)" [session]=session></back-id>
+    <selfie *ngSwitchCase="2" (nextStepEvent)="onStepEvent($event)" [session]=session></selfie>
+  </div>
+
+  <div *ngIf="done" class="finish"><p>Done!</p></div>
+
+</main>
