@@ -1,5 +1,3 @@
-# Notice: outdated and under revision
-
 # Angular Web SDK Sample
 
 This is an example showing how to run Incode's Web SDK inside the Angular JS framework. 
