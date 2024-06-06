@@ -7,6 +7,7 @@ import { FrontIdComponent } from '../front/front.component';
 import { BackIdComponent } from '../back/back.component';
 import { SelfieComponent } from '../selfie/selfie.component';
 import { QrComponent } from '../qr/qr.component';
+import { Output } from '@angular/core';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { QrComponent } from '../qr/qr.component';
 export class SmileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   step: number = 0;
-  session: any = null;
+  @Output() session: any = null;
   done = false;
   isDesktop: boolean;
   subscription!: Subscription;
@@ -29,16 +30,16 @@ export class SmileComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isDesktop = incodeSDK.incode.isDesktop();
   }
 
-  ngOnInit() { }
-
-  ngAfterViewInit() {
-    if (!this.isDesktop && !this.session) {
-      this.subscription = this.incodeSDK.createSession()
+  ngOnInit() {
+    if (this.isDesktop && !this.session) {
+      this.subscription = this.incodeSDK.getSession()
         .subscribe((data) => {
-          console.log(data);
           this.session = data
         });
     }
+  }
+
+  ngAfterViewInit() {
   }
 
   onStepEvent(e: any) {

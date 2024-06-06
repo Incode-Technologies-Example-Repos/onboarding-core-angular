@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
-import { create, createSession, addCustomFields } from '@incodetech/welcome';
+import { create } from '@incodetech/welcome';
 
 type SessionType = {
   token: string,
@@ -17,50 +16,36 @@ export class IncodeService {
 
   constructor() {
     this.incode = create({
-      apiURL: 'https://demo-api.incodesmile.com',
-      lang: 'en-US',
-      apiKey: '<your-api-key>'
+      apiURL: 'https://demo-api.incodesmile.com/0',
+      lang: 'en-US'
     });
   }
 
+  // For enterprise deployments please start session within your own web service
+  getSession(uuid?: string): Observable<any> {
+    const baseUrl: string = this.getBaseURL();
 
-  createSession(): Observable<any> {
-    const getSession = (): Promise<any> => {
-      return new Promise((resolve, reject) => {
-        createSession("ALL", undefined, {
-          configurationId: '<your-flow-id>',
-        })
-          .then(async (session: SessionType) => {
-            await this.incode.warmup();
-
-            resolve(session);
-          }).catch((e) => {
-            reject(e);
-          });
+    const fetchSession = (): Promise<any> => {
+      let url;
+      if (uuid) {
+        url = `https://${baseUrl}:443/start?uuid=${uuid}`
+      } else {
+        url = `https://${baseUrl}:443/start`
+      }
+      console.log(url);
+      return new Promise(async (resolve) => {
+        const response = await fetch(url);
+        const token  = await response.json();
+        resolve(token)
       })
     }
-    return from(getSession());
+    return from(fetchSession());
   }
 
-
-  // For enterprise deployments please start session within your own web service
-
-  // getSession(uuid: string): Observable<any> {
-  //   const fetchSession = (): Promise<any> => {
-  //     let url;
-  //     if (uuid) {
-  //       url = `http://localhost:3000/start?uuid=${uuid}`
-  //     } else {
-  //       url = `http://localhost:3000/start`
-  //     }
-  //     return new Promise(async (resolve) => {
-  //       const response = await fetch(url);
-  //       const token  = await response.json();
-  //       console.log(token);
-  //       resolve(token)
-  //     })
-  //   }
-  //   return from(fetchSession());
-  // }
+  getBaseURL(): string {
+    const url = window.location.hostname;
+    return url || 'localhost';
+    
+  }
 
 }

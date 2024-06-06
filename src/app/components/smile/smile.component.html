@@ -1,9 +1,8 @@
 <main class="main">
 
-  <div class="main" *ngIf="isDesktop && !done">
-    <h1>Scan to Start Identity Verification</h1>
-    <qr class="qr"></qr>
-  </div>
+  <div class="main" *ngIf="isDesktop && session">
+    <qr class="qr" [session]="session"></qr>
+  </div> 
 
 
   <!--Within these DIV container there are 4 elements.  Each element is a Step, so we have 4 steps.  -->

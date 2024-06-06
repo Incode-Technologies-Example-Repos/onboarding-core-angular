@@ -39,8 +39,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -67,6 +67,12 @@
             "development": {
               "buildTarget": "project:build:development"
             }
+          },
+          "options": {
+            "ssl": true,
+            "sslKey": "./node_modules/browser-sync/certs/server.key",
+            "sslCert": "./node_modules/browser-sync/certs/server.crt",
+            
           },
           "defaultConfiguration": "development"
         },
@@ -97,5 +103,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "4d20df34-d199-40a9-8b94-f753001b0be1"
   }
 }
