@@ -31,7 +31,7 @@ export class SmileComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    if (this.isDesktop && !this.session) {
+    if (!this.session) {
       this.subscription = this.incodeSDK.getSession()
         .subscribe((data) => {
           this.session = data
