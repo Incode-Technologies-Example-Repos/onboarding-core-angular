@@ -28,7 +28,6 @@ export class QrComponent {
   }
 
   private async renderRedirectToMobile(): Promise<void> {
-    console.log(this.session)
     await this.incodeSDK.incode.renderRedirectToMobile(this.redirectToMobileRef?.nativeElement, {
       session: this.session,
       url: window.location.href,

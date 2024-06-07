@@ -46,7 +46,6 @@ app.get('/start', async (req, res) => {
   
   // We create a new random uniqueId to associate the session
   uniqueId = uuidv4();
-  console.log(process.env)
   
   const startUrl = `${process.env.API_URL}/omni/start`;
   const startParams = {

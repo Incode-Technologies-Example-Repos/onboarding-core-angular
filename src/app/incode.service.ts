@@ -32,7 +32,6 @@ export class IncodeService {
       } else {
         url = `https://${baseUrl}:443/start`
       }
-      console.log(url);
       return new Promise(async (resolve) => {
         const response = await fetch(url);
         const token  = await response.json();
@@ -43,9 +42,8 @@ export class IncodeService {
   }
 
   getBaseURL(): string {
-    const url = window.location.hostname;
-    return url || 'localhost';
-    
+    const url = window.location.hostname || "localhost";
+    return url;
   }
 
 }
